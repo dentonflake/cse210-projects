@@ -3,21 +3,24 @@
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        Scripture scripture = new Scripture();
+        Scripture scripture = new Scripture(
+            new Reference("Alma", 26, 12),
+            "Yea, I know that I am nothing; as to my strength I am weak; therefore I will not boast of myself, but I will boast of my God, for in his strength I can do all things; yea, behold, many mighty miracles we have wrought in this land, for which we will praise his name forever."
+        );
 
         while (true)
         {
-            scripture.Display();
+            Console.Clear();
 
-            Console.Write("\n\nPress enter to continue or 'quit' to finish: ");
+            Console.WriteLine(scripture);
 
-            if (Console.ReadLine() == "quit")
+            Console.Write("\nPress enter to continue or type 'quit' to finish: ");
+
+            if (Console.ReadLine() == "quit" || scripture.Score() == 0)
             {
-                int score = scripture.Score();
-
-                Console.Write($"\nYou finished with {score} words remaining. Good job!");
+                Console.WriteLine($"You finished with {scripture.Score()} words left. Good job!");
 
                 break;
             }

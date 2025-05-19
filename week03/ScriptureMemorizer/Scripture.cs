@@ -1,52 +1,50 @@
 class Scripture
 {
-    private string _reference = "Alma 26:12";
-    private string _contents = "Yea, I know that I am nothing; as to my strength I am weak; therefore I will not boast of myself, but I will boast of my God, for in his strength I can do all things; yea, behold, many mighty miracles we have wrought in this land, for which we will praise his name forever.";
-    private List<int> _hidden = new List<int>();
+    private Reference _reference;
+    private List<Word> _words;
 
-    public void Display()
+    public Scripture(Reference reference, string contents)
     {
-        Console.Clear();
+        _reference = reference;
+        _words = contents.Split(" ")
+            .Select(w => new Word(w))
+            .ToList();
+    }
 
-        List<string> words = _contents.Split(" ").ToList();
+    public override string ToString()
+    {
+        string scripture = "";
 
-        Console.Write($"{_reference} ");
 
-        for (int i = 0; i < words.Count; i++)
+        scripture += _reference;
+        scripture += " ";
+
+        foreach (Word word in _words)
         {
-            if (_hidden.Contains(i))
-            {
-                Console.Write(new string('_', words[i].Length) + " ");
-            }
-            else
-            {
-                Console.Write(words[i] + " ");
-            }
+            scripture += word;
+            scripture += " ";
         }
+
+        return scripture;
     }
 
     public void Hide(int count)
     {
-        List<string> words = _contents.Split(" ").ToList();
-
         Random random = new Random();
+        
+        List<int> visibleIndexes = _words
+            .Select((word, index) => new { word, index })
+            .Where(x => !x.word.IsHidden())
+            .Select(x => x.index)
+            .ToList();
 
-        while (count > 0 && _hidden.Count < words.Count)
+        for (int i = 0; i < count && visibleIndexes.Count > 0; i++)
         {
-            int index = random.Next(words.Count);
-
-            if (!_hidden.Contains(index))
-            {
-                _hidden.Add(index);
-                count--;
-            }
+            int randomIndex = random.Next(visibleIndexes.Count);
+            _words[visibleIndexes[randomIndex]].Hide();
+            visibleIndexes.RemoveAt(randomIndex);
         }
     }
 
-    public int Score()
-    {
-        List<string> words = _contents.Split(" ").ToList();
-
-        return words.Count() - _hidden.Count();
-    }
+    public int Score() => _words.Count(word => !word.IsHidden());
 }
