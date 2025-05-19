@@ -4,6 +4,18 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello World! This is the ScriptureMemorizer Project.");
+        Scripture scripture = new Scripture();
+
+        while (true)
+        {
+            scripture.Display();
+
+            Console.Write("\n\nPress enter to continue or 'quit' to finish: ");
+
+            if (Console.ReadLine() == "quit")
+                break;
+
+            scripture.Hide(3);
+        }
     }
 }
