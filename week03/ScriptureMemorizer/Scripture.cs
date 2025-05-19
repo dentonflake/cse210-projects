@@ -34,12 +34,19 @@ class Scripture
         while (count > 0 && _hidden.Count < words.Count)
         {
             int index = random.Next(words.Count);
-            
+
             if (!_hidden.Contains(index))
             {
                 _hidden.Add(index);
                 count--;
             }
         }
+    }
+
+    public int Score()
+    {
+        List<string> words = _contents.Split(" ").ToList();
+
+        return words.Count() - _hidden.Count();
     }
 }

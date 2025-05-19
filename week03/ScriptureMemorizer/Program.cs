@@ -1,4 +1,5 @@
-using System;
+// Denton Flake
+// Creativity: I added a score that gets displayed when the user quits.
 
 class Program
 {
@@ -13,7 +14,13 @@ class Program
             Console.Write("\n\nPress enter to continue or 'quit' to finish: ");
 
             if (Console.ReadLine() == "quit")
+            {
+                int score = scripture.Score();
+
+                Console.Write($"\nYou finished with {score} words remaining. Good job!");
+
                 break;
+            }
 
             scripture.Hide(3);
         }
