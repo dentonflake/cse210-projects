@@ -10,7 +10,6 @@ class Reference
         _book = book;
         _chapter = chapter;
         _verseStart = verse;
-        _verseEnd = null;
     }
 
     public Reference(string book, int chapter, int verseStart, int verseEnd)
