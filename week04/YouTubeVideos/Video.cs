@@ -3,10 +3,10 @@ class Video
 {
     private string _title;
     private string _author;
-    private double _length;
+    private float _length;
     private List<Comment> _comments;
 
-    public Video(string title, string author, double length)
+    public Video(string title, string author, float length)
     {
         _title = title;
         _author = author;
@@ -26,7 +26,7 @@ class Video
     public void Display()
     {
         Console.WriteLine($"\n{this}");
-        Console.WriteLine("\nComments:\n");
+        Console.WriteLine($"\nComments: ({GetTotalComments()})\n");
 
         foreach (Comment comment in _comments)
         {
