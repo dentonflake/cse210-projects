@@ -2,6 +2,8 @@ public class GoalManager
 {
     private List<Goal> _goals = new List<Goal>();
     private int _score = 0;
+    private int _level = 1;
+    private List<string> _badges = new List<string>();
 
     public void CreateGoal()
     {
@@ -62,6 +64,9 @@ public class GoalManager
             int points = _goals[index].RecordEvent();
             _score += points;
             Console.WriteLine($"You earned {points} points!");
+
+            CheckLevelUp();
+            CheckBadges();
         }
         else
         {
@@ -69,9 +74,40 @@ public class GoalManager
         }
     }
 
+    private void CheckLevelUp()
+    {
+        int newLevel = (_score / 1000) + 1;
+        if (newLevel > _level)
+        {
+            _level = newLevel;
+            Console.WriteLine($"🎉 Congratulations! You've reached LEVEL {_level}! 🎉");
+        }
+    }
+
+    private void CheckBadges()
+    {
+        if (_score >= 1000 && !_badges.Contains("Bronze Badge"))
+        {
+            _badges.Add("Bronze Badge");
+            Console.WriteLine("🏅 You earned the Bronze Badge! (1000 points)");
+        }
+        if (_score >= 5000 && !_badges.Contains("Silver Badge"))
+        {
+            _badges.Add("Silver Badge");
+            Console.WriteLine("🏅 You earned the Silver Badge! (5000 points)");
+        }
+        if (_score >= 10000 && !_badges.Contains("Gold Badge"))
+        {
+            _badges.Add("Gold Badge");
+            Console.WriteLine("🏅 You earned the Gold Badge! (10000 points)");
+        }
+    }
+
     public void DisplayScore()
     {
-        Console.WriteLine($"\nYou have {_score} points.");
+        Console.WriteLine($"\nCurrent score: {_score}");
+        Console.WriteLine($"Level: {_level}");
+        Console.WriteLine("Badges: " + (_badges.Count > 0 ? string.Join(", ", _badges) : "None"));
     }
 
     public void SaveGoals()

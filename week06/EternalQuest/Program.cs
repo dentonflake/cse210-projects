@@ -1,3 +1,7 @@
+// Creativity Added:
+// - Levels: user gains a new level every 1000 points.
+// - Badges: Bronze, Silver, Gold awarded for reaching point milestones.
+
 class Program
 {
     static void Main(string[] args)
